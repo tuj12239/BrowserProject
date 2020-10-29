@@ -25,7 +25,40 @@ public class PageControlFragment extends Fragment {
         backButton = controlView.findViewById(R.id.backButton);
         nextButton = controlView.findViewById(R.id.nextButton);
 
+        goButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String urlText = urlBar.getText().toString();
+                if((!urlText.startsWith("http://")) && (!urlText.startsWith("https://"))) {
+                    urlText = "https://".concat(urlText);
+                }
+                ((PageControlInterface)getActivity()).goToCurrentURL(urlText);
+            }
+        });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((PageControlInterface)getActivity()).goToLastURL();
+            }
+        });
+
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((PageControlInterface)getActivity()).goToNextURL();
+            }
+        });
+
         return controlView;
+    }
+
+    interface PageControlInterface
+    {
+        void goToCurrentURL(String url);
+        void goToLastURL();
+        void goToNextURL();
     }
 
 }

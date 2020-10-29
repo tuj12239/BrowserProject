@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class BrowserActivity extends AppCompatActivity {
+public class BrowserActivity extends AppCompatActivity implements PageControlFragment.PageControlInterface {
 
     PageControlFragment pageControlFragment;
     PageViewerFragment pageViewerFragment;
@@ -22,5 +22,20 @@ public class BrowserActivity extends AppCompatActivity {
                 .add(R.id.page_control, pageControlFragment)
                 .add(R.id.page_viewer, pageViewerFragment)
                 .commit();
+    }
+
+    @Override
+    public void goToCurrentURL(String url) {
+        pageViewerFragment.goToCurrentURL(url);
+    }
+
+    @Override
+    public void goToLastURL() {
+
+    }
+
+    @Override
+    public void goToNextURL() {
+
     }
 }

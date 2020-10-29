@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import androidx.fragment.app.Fragment;
 
@@ -19,7 +20,13 @@ public class PageViewerFragment extends Fragment {
         View pageView = inflater.inflate(R.layout.page_viewer_fragment, container, false);
 
         webViewWidget = pageView.findViewById(R.id.webViewWidget);
+        webViewWidget.getSettings().setJavaScriptEnabled(true);
+        webViewWidget.setWebViewClient(new WebViewClient());
 
         return pageView;
+    }
+
+    public void goToCurrentURL(String url) {
+        webViewWidget.loadUrl(url);
     }
 }
