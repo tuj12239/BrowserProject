@@ -10,19 +10,33 @@ public class BrowserActivity extends AppCompatActivity implements
     PageControlFragment pageControlFragment;
     PageViewerFragment pageViewerFragment;
 
+    final String controlKey = "pageControl";
+    final String viewKey = "pageView";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        pageControlFragment = new PageControlFragment();
-        pageViewerFragment = new PageViewerFragment();
+        if(savedInstanceState == null) {
+            pageControlFragment = new PageControlFragment();
+            pageViewerFragment = new PageViewerFragment();
 
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.page_control, pageControlFragment)
-                .add(R.id.page_viewer, pageViewerFragment)
-                .commit();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.page_control, pageControlFragment)
+                    .add(R.id.page_viewer, pageViewerFragment)
+                    .commit();
+        } else {
+            pageControlFragment = (PageControlFragment) getSupportFragmentManager().getFragment(savedInstanceState, controlKey);
+            pageViewerFragment = (PageViewerFragment) getSupportFragmentManager().getFragment(savedInstanceState, viewKey);
+        }
+    }
+
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        getSupportFragmentManager().putFragment(savedInstanceState, controlKey, pageControlFragment);
+        getSupportFragmentManager().putFragment(savedInstanceState, viewKey, pageViewerFragment);
     }
 
     @Override

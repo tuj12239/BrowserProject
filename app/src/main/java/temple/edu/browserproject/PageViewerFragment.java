@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 public class PageViewerFragment extends Fragment {
 
     WebView webViewWidget;
+    final String urlKey = "url";
 
     public PageViewerFragment(){}
 
@@ -22,13 +23,28 @@ public class PageViewerFragment extends Fragment {
 
         webViewWidget = pageView.findViewById(R.id.webViewWidget);
         webViewWidget.getSettings().setJavaScriptEnabled(true);
+
+
+        return pageView;
+    }
+
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         webViewWidget.setWebViewClient(new WebViewClient() {
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 ((PageViewerInterface)getActivity()).updateURLBar(webViewWidget.getUrl());
             }
         });
 
-        return pageView;
+        if (savedInstanceState != null) {
+            webViewWidget.loadUrl(savedInstanceState.getString(urlKey));
+        }
+
+    }
+
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putString(urlKey, webViewWidget.getUrl());
     }
 
     public void goToCurrentURL(String url) {

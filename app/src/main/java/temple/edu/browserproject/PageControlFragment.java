@@ -55,7 +55,7 @@ public class PageControlFragment extends Fragment {
         return controlView;
     }
 
-    void updateUrlBar(String url) {
+    public void updateUrlBar(String url) {
         urlBar.setText(url);
     }
 
