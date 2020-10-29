@@ -1,5 +1,6 @@
 package temple.edu.browserproject;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,12 +22,28 @@ public class PageViewerFragment extends Fragment {
 
         webViewWidget = pageView.findViewById(R.id.webViewWidget);
         webViewWidget.getSettings().setJavaScriptEnabled(true);
-        webViewWidget.setWebViewClient(new WebViewClient());
+        webViewWidget.setWebViewClient(new WebViewClient() {
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                ((PageViewerInterface)getActivity()).updateURLBar(webViewWidget.getUrl());
+            }
+        });
 
         return pageView;
     }
 
     public void goToCurrentURL(String url) {
         webViewWidget.loadUrl(url);
+    }
+
+    public void goToLastURL() {
+        webViewWidget.goBack();
+    }
+
+    public void goToNextURL() {
+        webViewWidget.goForward();
+    }
+
+    interface PageViewerInterface {
+        void updateURLBar(String url);
     }
 }

@@ -33,6 +33,7 @@ public class PageControlFragment extends Fragment {
                 if((!urlText.startsWith("http://")) && (!urlText.startsWith("https://"))) {
                     urlText = "https://".concat(urlText);
                 }
+                updateUrlBar(urlText);
                 ((PageControlInterface)getActivity()).goToCurrentURL(urlText);
             }
         });
@@ -52,6 +53,10 @@ public class PageControlFragment extends Fragment {
         });
 
         return controlView;
+    }
+
+    void updateUrlBar(String url) {
+        urlBar.setText(url);
     }
 
     interface PageControlInterface
