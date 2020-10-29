@@ -37,6 +37,7 @@ public class PageViewerFragment extends Fragment {
         });
 
         if (savedInstanceState != null) {
+            webViewWidget.restoreState(savedInstanceState);
             webViewWidget.loadUrl(savedInstanceState.getString(urlKey));
         }
 
@@ -45,6 +46,7 @@ public class PageViewerFragment extends Fragment {
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putString(urlKey, webViewWidget.getUrl());
+        webViewWidget.saveState(savedInstanceState);
     }
 
     public void goToCurrentURL(String url) {
